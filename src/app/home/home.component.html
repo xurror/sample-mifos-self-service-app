@@ -1,5 +1,14 @@
 <div class="main-content">
-  <app-dashboard></app-dashboard>
-  <app-loan-account></app-loan-account>
+  <app-dashboard
+   [selectedAccount]="selectedAccount"
+   [loanAccounts]="loanAccounts"
+   (selectAccountEvent)="selectAccount($event)"
+  ></app-dashboard>
+  
+  <app-loan-account
+   *ngIf="selectedAccount"
+   [account]="selectedAccount"
+   (close)="resetSelection($event)"
+  ></app-loan-account>
 </div>
 

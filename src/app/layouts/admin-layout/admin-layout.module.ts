@@ -21,6 +21,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import { DashboardComponent } from 'app/dashboard/dashboard.component';
 import { LoanAccountComponent } from 'app/loan-account/loan-account.component';
+import { MatTableModule } from '@angular/material/table';
+import { MoneyFormatPipe } from 'app/pipes/money-format-pipe';
 
 @NgModule({
   imports: [
@@ -35,6 +37,7 @@ import { LoanAccountComponent } from 'app/loan-account/loan-account.component';
     MatNativeDateModule,
     MatInputModule,
     MatSelectModule,
+    MatTableModule,
     MatTooltipModule,
   ],
   declarations: [
@@ -48,6 +51,7 @@ import { LoanAccountComponent } from 'app/loan-account/loan-account.component';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    MoneyFormatPipe,
   ]
 })
 

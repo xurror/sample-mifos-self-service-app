@@ -1,37 +1,18 @@
 <div class="container-fluid">
     <div class="row">
-        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">content_copy</i>
-                    </div>
-                    <p class="card-category">Used Space</p>
-                    <h3 class="card-title">49/50
-                        <small>GB</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons text-danger">warning</i>
-                        <a href="javascript:void(0)">Get More Space...</a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
         <div class="col-lg-6 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-danger card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">store</i>
+                        <i class="material-icons">account_balance_wallet</i>
                     </div>
-                    <p class="card-category">Total Loan</p>
-                    <h3 class="card-title">$34,245</h3>
+                    <p class="card-category">Total Loan Balance</p>
+                    <h3 class="card-title">{{getTotalLoanBalance() | money}}</h3>
                 </div>
                 <div class="card-footer">
-                    <div class="stats">
+                    <!-- <div class="stats">
                         <i class="material-icons">date_range</i> Last 24 Hours
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -39,117 +20,84 @@
             <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
                     <div class="card-icon">
-                        <i class="material-icons">info_outline</i>
+                        <i class="material-icons">payments</i>
                     </div>
-                    <p class="card-category">Fixed Issues</p>
-                    <h3 class="card-title">75</h3>
+                    <p class="card-category">Total Repaid Amount</p>
+                    <h3 class="card-title">{{getTotalRepaidAmount() | money}}</h3>
                 </div>
                 <div class="card-footer">
-                    <div class="stats">
+                    <!-- <div class="stats">
                         <i class="material-icons">local_offer</i> Tracked from Github
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-        <!-- <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header card-header-info card-header-icon">
-                    <div class="card-icon">
-                        <i class="fa fa-twitter"></i>
-                    </div>
-                    <p class="card-category">Followers</p>
-                    <h3 class="card-title">+245</h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">update</i> Just Updated
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 
-    <div class="row">
-    <div class="col">
-        <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#newLoanAccount">
-            New Loan Account
-        </button>
-    </div>
-    </div>
-    
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title">Loan Accounts</h4>
-                    <!-- <p class="card-category">New employees on 15th September, 2016</p> -->
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-hover">
-                        <thead class="">
-                            <th>Account No.</th>
-                            <th>Original Loan</th>
-                            <th>Loan Balance</th>
-                            <th>Amount Paid</th>
-                            <th>Status</th>
-                        </thead>
-                        <tbody>
-                            <tr (dblclick)="doubleClick($event)">
-                                <td>000000001</td>
-                                <td>$36,738</td>
-                                <td>$23,789</td>
-                                <td>$56,142</td>
-                                <td>Open</td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <div *ngIf="!selectedAccount">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#newLoanAccount">
+                    New Loan Account
+                </button>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">Loan Accounts</h4>
+                        <!-- <p class="card-category">10 of 100</p> -->
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table mat-table [dataSource]="dataSource" class="table table-hover">
+                            <!-- Account No. Column -->
+                            <ng-container matColumnDef="accountNo">
+                                <th mat-header-cell *matHeaderCellDef> Account No. </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{loanAccount.accountNo}} </td>
+                            </ng-container>
+
+                            <!-- Original Name Column -->
+                            <ng-container matColumnDef="originalLoan">
+                                <th mat-header-cell *matHeaderCellDef> Original Name </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{loanAccount.originalLoan | money}} </td>
+                            </ng-container>
+
+                            <!-- Loan Balance Column -->
+                            <ng-container matColumnDef="loanBalance">
+                                <th mat-header-cell *matHeaderCellDef> Loan Balance </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{loanAccount.loanBalance | money}} </td>
+                            </ng-container>
+
+                            <!-- Amount Paid Column -->
+                            <ng-container matColumnDef="amountPaid">
+                                <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{loanAccount.amountPaid | money}} </td>
+                            </ng-container>
+
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef> Status </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{loanAccount.status}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr
+                             mat-row
+                             *matRowDef="let row; columns: displayedColumns;"
+                             (click)="selectAccount(row)"
+                            ></tr>
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                                        showFirstLastButtons 
+                                        aria-label="Select page of loan accounts">
+                        </mat-paginator>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header card-header-rose">
-                    <h4 class="card-title">Repayments</h4>
-                    <p class="card-category">New employees on 15th September, 2016</p>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-hover">
-                        <thead class="text-rose">
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Salary</th>
-                            <th>Country</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Dakota Rice</td>
-                                <td>$36,738</td>
-                                <td>Niger</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Minerva Hooper</td>
-                                <td>$23,789</td>
-                                <td>Curaçao</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Sage Rodriguez</td>
-                                <td>$56,142</td>
-                                <td>Netherlands</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Philip Chaney</td>
-                                <td>$38,735</td>
-                                <td>Korea, South</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> -->
     </div>
 </div>
 
