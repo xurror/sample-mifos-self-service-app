@@ -41,9 +41,9 @@ export class HomeComponent implements OnInit {
       interest: "1.2 per annum (0.1%  Per month) - Flat",
       interestCalculationPeriod: "Same as repayment period",
       interestType: "Flat",
-      submittedOn: "26 April 2023",
-      approvedOn: "26 April 2023",
-      disbursedOn: "26 April 2023",
+      submittedOn: "14 February 2013",
+      approvedOn: "14 February 2013",
+      disbursedOn: "14 February 2013",
     },
   ];
 

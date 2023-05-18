@@ -1,0 +1,54 @@
+<div class="main-content">
+    <div class="container-fluid mt-auto mb-auto">
+        <h2 class="mt-5 pt-5" style="text-align: center;">Welome</h2>
+        <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Sign In</h3>
+                        <!-- <p class="card-category">Are you looking for more components? Please check our Premium Version of Material Dashboard Angular.</p> -->
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div *ngIf="isSignIn">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Mobile No" type="number">
+                                </mat-form-field>
+
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Password" type="password">
+                                </mat-form-field>
+                                
+                                <p class="pull-left">
+                                    Don't have an account yet?&nbsp;<a (click)="isSignIn=false" class="text-info" style="cursor: pointer;">Sign Up</a>
+                                </p>
+                            </div>
+
+                            <div *ngIf="!isSignIn">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Mobile No" type="number">
+                                </mat-form-field>
+
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Password" type="password">
+                                </mat-form-field>
+                                
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Confirm Password" type="password">
+                                </mat-form-field>
+                                
+                                <p class="pull-left">
+                                    Already have an account?&nbsp;<a (click)="isSignIn=true" class="text-info" style="cursor: pointer;">Sign In</a>
+                                </p>
+                            </div>
+
+                          <button mat-raised-button type="submit" class="btn btn-primary pull-right">Submit</button>
+                          <div class="clearfix"></div>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

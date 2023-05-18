@@ -7,23 +7,24 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { AuthComponent } from './auth/auth.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
     HttpClientModule,
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
   ],
-  declarations: [
-    AppComponent,
-    AdminLayoutComponent,
-
-  ],
+  declarations: [AppComponent, AdminLayoutComponent, AuthComponent],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

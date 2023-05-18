@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
     location: Location;
-      mobile_menu_visible: any = 0;
+    mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
 
@@ -26,11 +26,11 @@ export class NavbarComponent implements OnInit {
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {
         this.sidebarClose();
-         var $layer: any = document.getElementsByClassName('close-layer')[0];
-         if ($layer) {
+        var $layer: any = document.getElementsByClassName('close-layer')[0];
+        if ($layer) {
            $layer.remove();
            this.mobile_menu_visible = 0;
-         }
+        }
      });
     }
 

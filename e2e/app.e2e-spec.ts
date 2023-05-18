@@ -1,10 +1,10 @@
-import { MaterialDashboardAngularPage } from './app.po';
+import { MifosDashboardAngularPage } from "./app.po";
 
-describe('material-dashboard-angular App', () => {
-  let page: MaterialDashboardAngularPage;
+describe('mifos-dashboard-angular App', () => {
+  let page: MifosDashboardAngularPage;
 
   beforeEach(() => {
-    page = new MaterialDashboardAngularPage();
+    page = new MifosDashboardAngularPage();
   });
 
   it('should display message saying app works', () => {
