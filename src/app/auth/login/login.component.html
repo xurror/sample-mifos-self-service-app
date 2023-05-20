@@ -1,0 +1,66 @@
+<div class="main-content">
+    <div class="container-fluid mt-auto mb-auto">
+        <h2 class="mt-5 pt-5" style="text-align: center;">Welome</h2>
+        <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h3 class="card-title">Sign In</h3>
+                        <!-- <p class="card-category">Are you looking for more components? Please check our Premium Version of Material Dashboard Angular.</p> -->
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
+                            <mat-form-field>
+                                <input matInput required
+                                 type="number"
+                                 placeholder="Mobile Number"
+                                 formControlName="username"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="loginForm.get('username').hasError('pattern')
+                                                && !loginForm.get('username').hasError('required')">
+                                    Mobile number is <strong>invalid</strong>
+                                </mat-error>
+                                <mat-error *ngIf="loginForm.get('username').hasError('required')">
+                                    Mobile number is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput required
+                                 type="password"
+                                 placeholder="Password"
+                                 formControlName="password"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                                    Password is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-checkbox formControlName="remember">
+                                Remember me
+                            </mat-checkbox>
+
+                            <br>
+                            
+                            <p class="pull-left mt-3">
+                                Don't have an account yet?&nbsp;<a routerLink="/auth/signup" class="text-info" style="cursor: pointer;">Sign Up</a>
+                            </p>
+                            
+                            <button mat-raised-button
+                                [disabled]="!loginForm.valid"
+                                type="submit"
+                                class="btn btn-primary pull-right"
+                            >
+                                Submit
+                            </button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

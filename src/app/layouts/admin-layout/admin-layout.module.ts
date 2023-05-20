@@ -17,7 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { DashboardComponent } from 'app/dashboard/dashboard.component';
 import { LoanAccountComponent } from 'app/loan-account/loan-account.component';
 import { MatTableModule } from '@angular/material/table';
-import { MoneyFormatPipe } from 'app/pipes/money-format-pipe';
+import { MoneyFormatPipe } from 'app/pipes/money-pipe';
 
 @NgModule({
   imports: [

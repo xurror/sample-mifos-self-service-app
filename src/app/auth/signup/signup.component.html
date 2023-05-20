@@ -1,0 +1,159 @@
+<div class="main-content">
+    <div class="container-fluid mt-auto mb-auto">
+        <h2 class="mt-5 pt-5" style="text-align: center;">Welome</h2>
+        <div class="row">
+            <div class="col-md-6 ml-auto mr-auto">
+
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h3 class="card-title">Sign Up</h3>
+                        <!-- <p class="card-category">Are you looking for more components? Please check our Premium Version of Material Dashboard Angular.</p> -->
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="signupForm" (ngSubmit)="signup()" id="signup-form">
+                            <mat-form-field>
+                                <input matInput required
+                                 placeholder="Account Number"
+                                 formControlName="accountNumber"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="signupForm.get('accountNumber').hasError('maxlength')
+                                                && !signupForm.get('accountNumber').hasError('required')">
+                                    Account number cannot exceed <strong>100 characters</strong>
+                                </mat-error>
+                                <mat-error *ngIf="signupForm.get('accountNumber').hasError('required')">
+                                    Account number is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            
+                            <mat-form-field>
+                                <input matInput required
+                                 placeholder="First Name"
+                                 formControlName="firstName"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="signupForm.get('firstName').hasError('maxlength')
+                                                && !signupForm.get('firstName').hasError('required')">
+                                    First name cannot exceed <strong>100 characters</strong>
+                                </mat-error>
+                                <mat-error *ngIf="signupForm.get('firstName').hasError('required')">
+                                    First name is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput required
+                                 placeholder="Last Name"
+                                 formControlName="lastName"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="signupForm.get('lastName').hasError('maxlength')
+                                                && !signupForm.get('lastName').hasError('required')">
+                                    Last name cannot exceed <strong>100 characters</strong>
+                                </mat-error>
+                                <mat-error *ngIf="signupForm.get('lastName').hasError('required')">
+                                    Last name is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            
+                            <mat-form-field>
+                                <input matInput required
+                                 placeholder="Username"
+                                 formControlName="username"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="signupForm.get('username').hasError('maxlength')
+                                                && !signupForm.get('username').hasError('required')">
+                                    Username cannot exceed <strong>100 characters</strong>
+                                </mat-error>
+                                <mat-error *ngIf="signupForm.get('username').hasError('required')">
+                                    Username is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            
+                            <mat-form-field>
+                                <input matInput required
+                                 type="number"
+                                 placeholder="Mobile Number"
+                                 formControlName="mobileNumber"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="signupForm.get('mobileNumber').hasError('pattern')
+                                                && !signupForm.get('mobileNumber').hasError('required')">
+                                    Mobile number is <strong>invalid</strong>
+                                </mat-error>
+                                <mat-error *ngIf="signupForm.get('mobileNumber').hasError('required')">
+                                    Mobile number is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput required
+                                 type="email"
+                                 placeholder="Email"
+                                 formControlName="email"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="signupForm.get('email').hasError('email')
+                                                && !signupForm.get('email').hasError('required')">
+                                    Email is <strong>invalid</strong>
+                                </mat-error>
+                                <mat-error *ngIf="signupForm.get('email').hasError('required')">
+                                    Email is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            
+                            <mat-form-field>
+                                <input matInput required
+                                 type="password"
+                                 placeholder="Password"
+                                 formControlName="password"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="signupForm.get('password').hasError('pattern')
+                                                && !signupForm.get('password').hasError('required')">
+                                    Password is <strong>invalid</strong>
+                                </mat-error>
+                                <mat-error *ngIf="signupForm.get('password').hasError('required')">
+                                    Password is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field>
+                                <input matInput required
+                                 type="password"
+                                 placeholder="Confirm Password"
+                                 formControlName="confirmPassword"
+                                 [errorStateMatcher]="errorStateMatcher"
+                                >
+                                <mat-error *ngIf="signupForm.get('password').hasError('required')">
+                                    Please enter your password again
+                                </mat-error>
+                            </mat-form-field>
+
+                            <div *ngIf="(signupForm.get('password').touched || signupForm.get('password').dirty) &&
+                                        (signupForm.get('confirmPassword').touched || signupForm.get('confirmPassword').dirty)">
+                                <p *ngIf="signupForm.hasError('passwordsMatch') && (signupForm.touched || signupForm.dirty)"
+                                    class="text-danger">
+                                    Passwords do not match
+                                </p>
+                            </div>
+
+                            <p class="pull-left mt-3">
+                                Already have an account?&nbsp;<a routerLink="/auth/login" class="text-info" style="cursor: pointer;">Sign In</a>
+                            </p>
+
+                            <button mat-raised-button
+                                type="submit"
+                                class="btn btn-primary pull-right"
+                            >
+                                Submit
+                            </button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

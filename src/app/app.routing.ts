@@ -4,8 +4,7 @@ import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { AuthGuard } from './auth/auth.guard';
-import { AuthComponent } from './auth/auth.component';
+import { AuthenticationGuard } from './core/authentication/authentication.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +15,7 @@ const routes: Routes = [
   {
     path: "",
     component: AdminLayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthenticationGuard],
     children: [
       {
         path: "",
@@ -29,7 +28,15 @@ const routes: Routes = [
   },
   {
     path: "auth",
-    component: AuthComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./auth/auth.module").then(
+            (m) => m.AuthModule
+          ),
+      },
+    ],
   },
 ];
 
@@ -41,8 +48,7 @@ const routes: Routes = [
        useHash: true
     })
   ],
-  providers: [AuthGuard],
-  exports: [
-  ],
+  providers: [],
+  exports: [],
 })
 export class AppRoutingModule { }
