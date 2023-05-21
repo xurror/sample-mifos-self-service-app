@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { AuthenticationService } from "app/core/authentication/authentication.service";
 import { Logger } from "app/core/logger/logger.service";
 import { BaseErrorStateMatcher } from "app/utils/validators";
@@ -24,9 +25,13 @@ export class LoginComponent implements OnInit {
     remember: new FormControl(false, [Validators.required]),
   });
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private router: Router, private authService: AuthenticationService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(["/"], { replaceUrl: true });
+    }
+  }
 
   login() {
     log.debug("Login");
@@ -36,13 +41,21 @@ export class LoginComponent implements OnInit {
       .login(this.loginForm.value)
       .pipe(
         finalize(() => {
-          this.loginForm.reset();
-          this.loginForm.markAsPristine();
-          this.loginForm.enable();
           this.loading = false;
         })
       )
-      .subscribe();
+      .subscribe({
+        next: (data) => {
+          log.debug("Login Response:", data);
+          this.router.navigate(["/"], { replaceUrl: true });
+        },
+        error: (err) => {
+          log.debug("Failed to login:", err);
+          this.loginForm.reset();
+          this.loginForm.markAsPristine();
+          this.loginForm.enable();
+        }
+      });
   }
 
   forgotPassword() {

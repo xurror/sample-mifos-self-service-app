@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Alert } from 'app/core/alert/alert.model';
+import { AlertService } from 'app/core/alert/alert.service';
 declare var $: any;
 @Component({
   selector: 'app-notifications',
@@ -7,18 +9,21 @@ declare var $: any;
 })
 export class NotificationsComponent implements OnInit {
 
-  constructor() { }
-  showNotification(from, align){
+  constructor(private alertService: AlertService) {}
+
+  showNotification(from, align, alert: Alert){
       const type = ['','info','success','warning','danger'];
 
       const color = Math.floor((Math.random() * 4) + 1);
 
       $.notify({
           icon: "notifications",
-          message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
+          message: alert.message,
+          // message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
 
       },{
-          type: type[color],
+          // type: type[color],
+          type: alert.type,
           timer: 4000,
           placement: {
               from: from,
@@ -36,7 +41,9 @@ export class NotificationsComponent implements OnInit {
           '</div>'
       });
   }
+  
   ngOnInit() {
+    this.alertService.alertEvent.subscribe((alert: Alert) => this.showNotification('top', 'center', alert));
   }
 
 }

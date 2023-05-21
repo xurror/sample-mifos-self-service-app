@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header card-header-primary">
                         <h3 class="card-title">Sign Up</h3>
-                        <!-- <p class="card-category">Are you looking for more components? Please check our Premium Version of Material Dashboard Angular.</p> -->
+                        <p class="card-category">Sign up using your registered account number and mobile number.</p>
                     </div>
                     <div class="card-body">
                         <form [formGroup]="signupForm" (ngSubmit)="signup()" id="signup-form">
@@ -17,57 +17,13 @@
                                  formControlName="accountNumber"
                                  [errorStateMatcher]="errorStateMatcher"
                                 >
+                                <mat-hint>The account number from your account manager</mat-hint>
                                 <mat-error *ngIf="signupForm.get('accountNumber').hasError('maxlength')
                                                 && !signupForm.get('accountNumber').hasError('required')">
                                     Account number cannot exceed <strong>100 characters</strong>
                                 </mat-error>
                                 <mat-error *ngIf="signupForm.get('accountNumber').hasError('required')">
                                     Account number is <strong>required</strong>
-                                </mat-error>
-                            </mat-form-field>
-                            
-                            <mat-form-field>
-                                <input matInput required
-                                 placeholder="First Name"
-                                 formControlName="firstName"
-                                 [errorStateMatcher]="errorStateMatcher"
-                                >
-                                <mat-error *ngIf="signupForm.get('firstName').hasError('maxlength')
-                                                && !signupForm.get('firstName').hasError('required')">
-                                    First name cannot exceed <strong>100 characters</strong>
-                                </mat-error>
-                                <mat-error *ngIf="signupForm.get('firstName').hasError('required')">
-                                    First name is <strong>required</strong>
-                                </mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field>
-                                <input matInput required
-                                 placeholder="Last Name"
-                                 formControlName="lastName"
-                                 [errorStateMatcher]="errorStateMatcher"
-                                >
-                                <mat-error *ngIf="signupForm.get('lastName').hasError('maxlength')
-                                                && !signupForm.get('lastName').hasError('required')">
-                                    Last name cannot exceed <strong>100 characters</strong>
-                                </mat-error>
-                                <mat-error *ngIf="signupForm.get('lastName').hasError('required')">
-                                    Last name is <strong>required</strong>
-                                </mat-error>
-                            </mat-form-field>
-                            
-                            <mat-form-field>
-                                <input matInput required
-                                 placeholder="Username"
-                                 formControlName="username"
-                                 [errorStateMatcher]="errorStateMatcher"
-                                >
-                                <mat-error *ngIf="signupForm.get('username').hasError('maxlength')
-                                                && !signupForm.get('username').hasError('required')">
-                                    Username cannot exceed <strong>100 characters</strong>
-                                </mat-error>
-                                <mat-error *ngIf="signupForm.get('username').hasError('required')">
-                                    Username is <strong>required</strong>
                                 </mat-error>
                             </mat-form-field>
                             
@@ -112,7 +68,9 @@
                                 >
                                 <mat-error *ngIf="signupForm.get('password').hasError('pattern')
                                                 && !signupForm.get('password').hasError('required')">
-                                    Password is <strong>invalid</strong>
+                                    Password must be <strong>8 characters or more.</strong><br>
+                                    Password must contain atleast <strong>one number.</strong><br>
+                                    Password must contain atleast <strong>one special character.</strong>
                                 </mat-error>
                                 <mat-error *ngIf="signupForm.get('password').hasError('required')">
                                     Password is <strong>required</strong>

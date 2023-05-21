@@ -53,19 +53,25 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     if (this.selectedAccount) {
       return this.selectedAccount.loanBalance;
     }
-    return this.loanAccounts.reduce(
-      (sum, account) => sum + account.loanBalance,
-      0
-    );
+    if (this.loanAccounts){
+      return this.loanAccounts.reduce(
+        (sum, account) => sum + account.loanBalance,
+        0
+      );
+    }
+    return 0;
   };
 
   getTotalRepaidAmount = () => {
     if (this.selectedAccount) {
       return this.selectedAccount.amountPaid
     }
-    return this.loanAccounts.reduce(
-      (sum, account) => sum + account.amountPaid,
-      0
-    );
+    if (this.loanAccounts){
+      return this.loanAccounts.reduce(
+        (sum, account) => sum + account.amountPaid,
+        0
+      );
+    }
+    return 0;
   };
 }

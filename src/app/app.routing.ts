@@ -32,12 +32,11 @@ const routes: Routes = [
       {
         path: "",
         loadChildren: () =>
-          import("./auth/auth.module").then(
-            (m) => m.AuthModule
-          ),
+          import("./auth/auth.module").then((m) => m.AuthModule),
       },
     ],
   },
+  { path: "**", redirectTo: "dashboard", pathMatch: "full" },
 ];
 
 @NgModule({

@@ -1,7 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { Logger } from 'app/core/logger/logger.service';
 import { LoanAccount } from 'app/models/account';
   
 declare var $: any;
+const log = new Logger("HomeComponent");
 
 @Component({
   selector: "app-home",
@@ -9,7 +13,14 @@ declare var $: any;
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  responseAccounts = [];
+  constructor(private http: HttpClient, private authService: AuthenticationService) {
+    const clientId = this.authService.getCredentials().clients[0];
+    this.http.get(`/clients/${clientId}/accounts`)
+    .subscribe((data) => {
+      log.debug("Accounts Res:", data);
+    })
+  }
 
   selectedAccount: LoanAccount = null;
   loanAccounts: LoanAccount[] = [

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { HomeComponent } from '../../home/home.component';
 import { UserProfileComponent } from '../../profile/user-profile.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -40,7 +39,6 @@ import { MoneyFormatPipe } from 'app/pipes/money-pipe';
     DashboardComponent,
     LoanAccountComponent,
     UserProfileComponent,
-    NotificationsComponent,
     MoneyFormatPipe,
   ],
 })

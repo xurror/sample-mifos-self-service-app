@@ -19,10 +19,13 @@ import { environment } from '../../../environments/environment';
 import { LoginContext, RegistrationContext } from './login-context.model';
 import { Credentials } from './credentials.model';
 import { OAuth2Token } from './o-auth2-token.model';
+import { Logger } from '../logger/logger.service';
+import { AlertType } from '../alert/alert.model';
 
 /**
  * Authentication workflow.
  */
+const log = new Logger("AuthenticationService");
 @Injectable()
 export class AuthenticationService {
   /** Denotes whether the user credentials should persist through sessions. */
@@ -89,9 +92,9 @@ export class AuthenticationService {
 
   register(registrationContext: RegistrationContext) {
     return this.http.post("/registration", registrationContext).pipe(
-      map((credentials: Credentials) => {
-        this.onLoginSuccess(credentials);
-        return of(true);
+      map((response) => {
+        console.log("Regtion Res: ", response);
+        return response;
       })
     );
   }
@@ -102,10 +105,6 @@ export class AuthenticationService {
    * @returns {Observable<boolean>} True if authentication is successful.
    */
   login(loginContext: LoginContext) {
-    this.alertService.alert({
-      type: "Authentication Start",
-      message: "Please wait...",
-    });
     this.rememberMe = loginContext.remember;
     this.storage = this.rememberMe ? localStorage : sessionStorage;
 
@@ -124,7 +123,7 @@ export class AuthenticationService {
         .pipe(
           map((tokenResponse: OAuth2Token) => {
             this.getUserDetails(tokenResponse);
-            return of(true);
+            return true;
           })
         );
     } else {
@@ -136,7 +135,7 @@ export class AuthenticationService {
         .pipe(
           map((credentials: Credentials) => {
             this.onLoginSuccess(credentials);
-            return of(true);
+            return true;
           })
         );
     }
@@ -238,20 +237,23 @@ export class AuthenticationService {
     if (credentials.isTwoFactorAuthenticationRequired) {
       this.credentials = credentials;
       this.alertService.alert({
-        type: "Two Factor Authentication Required",
+        type: AlertType.INFO,
+        title: "Two Factor Authentication Required",
         message: "Two Factor Authentication Required",
       });
     } else {
       if (credentials.shouldRenewPassword) {
         this.credentials = credentials;
         this.alertService.alert({
-          type: "Password Expired",
+          type: AlertType.DANGER,
+          title: "Password Expired",
           message: "Your password has expired, please reset your password!",
         });
       } else {
         this.setCredentials(credentials);
         this.alertService.alert({
-          type: "Authentication Success",
+          type: AlertType.SUCCESS,
+          title: "Authentication Success",
           message: `${credentials.username} successfully logged in!`,
         });
         delete this.credentials;
@@ -385,13 +387,15 @@ export class AuthenticationService {
     this.authenticationInterceptor.setTwoFactorAccessToken(response.token);
     if (this.credentials.shouldRenewPassword) {
       this.alertService.alert({
-        type: "Password Expired",
+        type: AlertType.DANGER,
+        title: "Password Expired",
         message: "Your password has expired, please reset your password!",
       });
     } else {
       this.setCredentials(this.credentials);
       this.alertService.alert({
-        type: "Authentication Success",
+        type: AlertType.SUCCESS,
+        title: "Authentication Success",
         message: `${this.credentials.username} successfully logged in!`,
       });
       delete this.credentials;
@@ -412,7 +416,8 @@ export class AuthenticationService {
       .pipe(
         map(() => {
           this.alertService.alert({
-            type: "Password Reset Success",
+            type: AlertType.SUCCESS,
+            title: "Password Reset Success",
             message: `Your password was sucessfully reset!`,
           });
           this.authenticationInterceptor.removeAuthorization();

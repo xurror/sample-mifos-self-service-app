@@ -13,7 +13,6 @@
                         <form [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
                             <mat-form-field>
                                 <input matInput required
-                                 type="number"
                                  placeholder="Mobile Number"
                                  formControlName="username"
                                  [errorStateMatcher]="errorStateMatcher"

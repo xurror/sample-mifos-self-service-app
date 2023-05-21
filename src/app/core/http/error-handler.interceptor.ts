@@ -12,6 +12,7 @@ import { environment } from 'environments/environment';
 /** Custom Services */
 import { Logger } from '../logger/logger.service';
 import { AlertService } from '../alert/alert.service';
+import { AlertType } from '../alert/alert.model';
 
 /** Initialize Logger */
 const log = new Logger('ErrorHandlerInterceptor');
@@ -51,19 +52,48 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     }
 
     if (status === 401 || (environment.oauth.enabled && status === 400)) {
-      this.alertService.alert({ type: 'Authentication Error', message: 'Invalid User Details. Please try again!' });
+      this.alertService.alert({
+        type: AlertType.DANGER,
+        title: "Authentication Error",
+        message: "Invalid User Details. Please try again!",
+      });
     } else if (status === 403 && errorMessage === 'The provided one time token is invalid') {
-      this.alertService.alert({ type: 'Invalid Token', message: 'Invalid Token. Please try again!' });
+      this.alertService.alert({
+        type: AlertType.DANGER,
+        title: "Invalid Token",
+        message: "Invalid Token. Please try again!",
+      });
     } else if (status === 400) {
-      this.alertService.alert({ type: 'Bad Request', message: errorMessage || 'Invalid parameters were passed in the request!' });
+      this.alertService.alert({
+        type: AlertType.DANGER,
+        title: "Bad Request",
+        message:
+          errorMessage || "Invalid parameters were passed in the request!",
+      });
     } else if (status === 403) {
-      this.alertService.alert({ type: 'Unauthorized Request', message: errorMessage || 'You are not authorized for this request!' });
+      this.alertService.alert({
+        type: AlertType.DANGER,
+        title: "Unauthorized Request",
+        message: errorMessage || "You are not authorized for this request!",
+      });
     } else if (status === 404) {
-      this.alertService.alert({ type: 'Resource does not exist', message: errorMessage || 'Resource does not exist!' });
+      this.alertService.alert({
+        type: AlertType.DANGER,
+        title: "Resource does not exist",
+        message: errorMessage || "Resource does not exist!",
+      });
     }  else if (status === 500) {
-      this.alertService.alert({ type: 'Internal Server Error', message: 'Internal Server Error. Please try again later.' });
+      this.alertService.alert({
+        type: AlertType.DANGER,
+        title: "Internal Server Error",
+        message: "Internal Server Error. Please try again later.",
+      });
     } else {
-      this.alertService.alert({ type: 'Unknown Error', message: 'Unknown Error. Please try again later.' });
+      this.alertService.alert({
+        type: AlertType.DANGER,
+        title: "Unknown Error",
+        message: "Unknown Error. Please try again later.",
+      });
     }
 
     throw response;

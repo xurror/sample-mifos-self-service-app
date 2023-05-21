@@ -17,4 +17,9 @@ export interface Credentials {
   username: string;
   shouldRenewPassword: boolean;
   rememberMe?: boolean;
+  clients: number[];
+}
+
+export interface AppUser {
+  id: number;
 }

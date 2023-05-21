@@ -6,7 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
-import { InputErrorComponent } from './input-error/input-error.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   imports: [CommonModule, MatInputModule, RouterModule, FormsModule],
@@ -14,13 +14,13 @@ import { InputErrorComponent } from './input-error/input-error.component';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    InputErrorComponent,
+    NotificationsComponent,
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    InputErrorComponent,
+    NotificationsComponent,
   ],
 })
 export class ComponentsModule {}

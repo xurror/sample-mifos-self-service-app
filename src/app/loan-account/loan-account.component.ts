@@ -1,5 +1,8 @@
 import { Component, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { Logger } from 'app/core/logger/logger.service';
 import { LoanAccount } from 'app/models/account';
+
+const log = new Logger("LoanAccountComponent");
 
 @Component({
   selector: "app-loan-account",
@@ -15,6 +18,7 @@ export class LoanAccountComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    log.debug("Account:", this.account);
     for (const key in this.account) {
       switch (key) {
         case "repaymentStrategy":

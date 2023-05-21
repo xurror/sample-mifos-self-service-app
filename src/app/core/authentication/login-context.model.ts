@@ -9,11 +9,7 @@ export interface LoginContext {
 
 export interface RegistrationContext {
   accountNumber: string;
-  firstName: string;
-  lastName: string;
-  username: string;
-  mobileNumber: number;
+  mobileNumber: string;
   email: string;
   password: string;
-  authenticationMode: string;
 }
