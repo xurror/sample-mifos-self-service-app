@@ -1,4 +1,4 @@
-export interface LoanAccount {
+export interface LoanAccountOverview {
   id: number;
   accountNo: string;
   originalLoan: number;

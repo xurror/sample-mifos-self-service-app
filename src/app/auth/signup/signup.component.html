@@ -45,22 +45,6 @@
 
                             <mat-form-field>
                                 <input matInput required
-                                 type="email"
-                                 placeholder="Email"
-                                 formControlName="email"
-                                 [errorStateMatcher]="errorStateMatcher"
-                                >
-                                <mat-error *ngIf="signupForm.get('email').hasError('email')
-                                                && !signupForm.get('email').hasError('required')">
-                                    Email is <strong>invalid</strong>
-                                </mat-error>
-                                <mat-error *ngIf="signupForm.get('email').hasError('required')">
-                                    Email is <strong>required</strong>
-                                </mat-error>
-                            </mat-form-field>
-                            
-                            <mat-form-field>
-                                <input matInput required
                                  type="password"
                                  placeholder="Password"
                                  formControlName="password"

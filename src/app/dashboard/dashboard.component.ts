@@ -1,77 +1,40 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  Input,
-  Output,
-  EventEmitter,
-  AfterViewInit,
-} from "@angular/core";
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from "@angular/material/table";
-import { LoanAccount } from "app/models/account";
-
+import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { Logger } from 'app/core/logger/logger.service';
+  
 declare var $: any;
+const log = new Logger("HomeComponent");
 
 @Component({
-  selector: "app-dashboard",
+  selector: "app-home",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.css"],
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
-  @Input() selectedAccount: LoanAccount = null;
-  @Input() loanAccounts: LoanAccount[] = [];
-  @Output() selectAccountEvent = new EventEmitter<LoanAccount>();
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  displayedColumns: string[] = [
-    "accountNo",
-    "originalLoan",
-    "loanBalance",
-    "amountPaid",
-    "status",
-  ];
-  dataSource = new MatTableDataSource<LoanAccount>();
-
-  constructor() {}
-
-  ngOnInit() {
-    this.dataSource.data = this.loanAccounts;
+export class DashboardComponent implements OnInit {
+  clientId;
+  selectedLoanId;
+  responseAccounts = [];
+  
+  constructor(
+    private http: HttpClient,
+    private authService: AuthenticationService
+  ) {
+    this.clientId = this.authService.getCredentials().clients[0];
+    this.http.get(`/clients/${this.clientId}/accounts`).subscribe((data) => {
+      log.debug("Accounts Res:", data);
+    });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+  ngOnInit() {}
+
+  selectAccount($event: number) {
+    console.log("LoanAccountComponent Receieved Select Event: ", $event);
+    this.selectedLoanId = $event;
   }
 
-  selectAccount = (account: LoanAccount) => {
-    this.selectedAccount = account;
-    this.selectAccountEvent.emit(account);
-  };
-
-  getTotalLoanBalance = () => {
-    if (this.selectedAccount) {
-      return this.selectedAccount.loanBalance;
-    }
-    if (this.loanAccounts){
-      return this.loanAccounts.reduce(
-        (sum, account) => sum + account.loanBalance,
-        0
-      );
-    }
-    return 0;
-  };
-
-  getTotalRepaidAmount = () => {
-    if (this.selectedAccount) {
-      return this.selectedAccount.amountPaid
-    }
-    if (this.loanAccounts){
-      return this.loanAccounts.reduce(
-        (sum, account) => sum + account.amountPaid,
-        0
-      );
-    }
-    return 0;
-  };
+  resetSelection($event: number) {
+    this.selectedLoanId = null;
+    console.log("LoanAccountComponent Receieved Reset Event: ", $event);
+  }
 }

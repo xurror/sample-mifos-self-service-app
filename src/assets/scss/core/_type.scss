@@ -68,9 +68,11 @@ h2.title{
 .footer-big p{
     color: $gray-light;
 }
-
 .text-warning {
   color: $brand-warning !important;
+}
+.text-white {
+  color: $white !important;
 }
 .text-primary {
   color: $brand-primary !important;

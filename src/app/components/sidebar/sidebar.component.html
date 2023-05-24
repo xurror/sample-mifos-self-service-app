@@ -3,7 +3,18 @@
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
             <a class="nav-link" [routerLink]="[menuItem.path]">
                 <i class="material-icons">{{menuItem.icon}}</i>
-                <p>{{menuItem.title}}</p>
+                <h4>{{menuItem.title}}</h4>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="sidebar-wrapper">
+    <ul class="nav mt-auto pt-auto">
+        <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link bg-danger" (click)="onLogout()" href="javascript:void(0)">
+                <i class="material-icons text-white">logout</i>
+                <h4 class="text-white">Logout</h4>
             </a>
         </li>
     </ul>

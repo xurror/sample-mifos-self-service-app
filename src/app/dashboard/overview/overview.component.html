@@ -1,0 +1,208 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-danger card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">account_balance_wallet</i>
+                    </div>
+                    <h3 class="card-title text-muted">Total Loan Balance</h3>
+                    <h2 class="card-title">{{getTotalLoanBalance() | money}}</h2>
+                </div>
+                <div class="card-footer">
+                    <!-- <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">payments</i>
+                    </div>
+                    <h3 class="card-title text-muted">Total Repaid Amount</h3>
+                    <h2 class="card-title">{{getTotalRepaidAmount() | money}}</h2>
+                </div>
+                <div class="card-footer">
+                    <!-- <div class="stats">
+                        <i class="material-icons">local_offer</i> Tracked from Github
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!selectedLoanId">
+        <div class="row">
+            <div class="col">
+                <div class="pull-right">
+                    <button (click)="setupNewLoanAccountForm()" class="btn btn-rose mx-3" data-toggle="modal" data-target="#newLoanAccount">
+                        New Loan Account
+                    </button>
+                    <button (click)="setupNewLoanAccountForm()" class="btn btn-success" data-toggle="modal" data-target="#makeRepayment">
+                        Make A Repayment
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <h3 class="card-title">Loan Accounts</h3>
+                        <!-- <p class="card-category">10 of 100</p> -->
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table mat-table [dataSource]="dataSource" class="table table-hover">
+                            <!-- Account No. Column -->
+                            <ng-container matColumnDef="accountNo">
+                                <th mat-header-cell *matHeaderCellDef> Account No. </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{loanAccount.accountNo}} </td>
+                            </ng-container>
+
+                            <!-- Original Name Column -->
+                            <ng-container matColumnDef="originalLoan">
+                                <th mat-header-cell *matHeaderCellDef> Loan Account </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{ loanAccount.productName }} </td>
+                            </ng-container>
+
+                            <!-- Original Name Column -->
+                            <ng-container matColumnDef="originalLoan">
+                                <th mat-header-cell *matHeaderCellDef> Original Loan </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{ loanAccount.originalLoan | money }} </td>
+                            </ng-container>
+
+                            <!-- Loan Balance Column -->
+                            <ng-container matColumnDef="loanBalance">
+                                <th mat-header-cell *matHeaderCellDef> Loan Balance </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{loanAccount.loanBalance | money}} </td>
+                            </ng-container>
+
+                            <!-- Amount Paid Column -->
+                            <ng-container matColumnDef="amountPaid">
+                                <th mat-header-cell *matHeaderCellDef> Amount Paid </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{loanAccount.amountPaid | money}} </td>
+                            </ng-container>
+
+                            <!-- Last Repayment Date Column -->
+                            <ng-container matColumnDef="lastRepaymentDate">
+                                <th mat-header-cell *matHeaderCellDef> Last Repayment Date </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{ loanAccount.timeline.actualMaturityDate | date:dateFormat }} </td>
+                            </ng-container>
+
+                            <!-- Status Column -->
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef> Status </th>
+                                <td mat-cell *matCellDef="let loanAccount"> {{getLoanStatus(loanAccount.status)}} </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr
+                             mat-row
+                             *matRowDef="let row; columns: displayedColumns;"
+                             (click)="selectAccount(row)"
+                            ></tr>
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                                        showFirstLastButtons 
+                                        aria-label="Select page of loan accounts">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- New-Loan-Account-Modal-Angular -->
+<div class="modal modal-angular fade" id="newLoanAccount" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="loansAccountDetailsForm" (ngSubmit)="submitLoanApplication()">
+                <div class="modal-body text-center px-4">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="margin-top">
+                        New Loan Account
+                    </h3>
+                    
+                    <div class="separator"></div>
+
+                    <mat-form-field>
+                        <mat-select formControlName="productId" placeholder="Product Name" required>
+                            <mat-option *ngFor="let product of productData" [value]="product.id">
+                                {{ product.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field *ngIf="loanProductSelected">
+                        <input matInput required
+                            placeholder="Principal"
+                            formControlName="principal"
+                            [errorStateMatcher]="errorStateMatcher"
+                        >
+                        <mat-error *ngIf="loansAccountDetailsForm.get('principal').hasError('required')">
+                            Principal is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button mat-raised-buttonn type="submit" class="btn btn-center btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Make-A-Repayment-Modal-Angular -->
+<div class="modal modal-angular fade" id="makeRepayment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="repaymentForm" (ngSubmit)="makeRepayment()">
+                <div class="modal-body text-center px-4">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="margin-top">
+                        New Repayment
+                    </h3>
+                    
+                    <div class="separator"></div>
+
+                    <mat-form-field>
+                        <mat-select formControlName="loanId" placeholder="Loan" required>
+                            <mat-option *ngFor="let loan of dataSource.data" [value]="loan.id">
+                                Account No.: {{ loan.accountNo }} - Balance: {{ loan.loanBalance }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    
+                    <mat-form-field *ngIf="loanSelected">
+                        <input matInput required type="number" [max]="loanSelected.loanBalance"
+                            placeholder="Transaction Amount"
+                            formControlName="transactionAmount"
+                            [errorStateMatcher]="errorStateMatcher"
+                        >
+                        <mat-error *ngIf="repaymentForm.get('transactionAmount').hasError('max')
+                                        && !repaymentForm.get('transactionAmount').hasError('required')">
+                            Transaction Amount <strong>cannot be more than outstanding loan balance</strong>
+                        </mat-error>
+                        <mat-error *ngIf="repaymentForm.get('transactionAmount').hasError('required')">
+                            Transaction Amount is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button mat-raised-buttonn type="submit" class="btn btn-center btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

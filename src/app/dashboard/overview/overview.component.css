@@ -1,0 +1,19 @@
+.mat-header-cell {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #212529;
+}
+
+.mat-cell {
+    font-size: .95rem;
+}
+
+.btn-center {
+    margin: 0 auto;
+    display: block;
+}
+
+/* .mat-column-accountNo {
+    width: 17%;
+    border-right: 1px solid currentColor;
+} */

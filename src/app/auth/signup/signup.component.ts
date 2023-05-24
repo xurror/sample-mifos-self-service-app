@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { RegistrationContext } from 'app/core/authentication/login-context.model';
 import { Logger } from 'app/core/logger/logger.service';
-import { BaseErrorStateMatcher, basicControl, passwordsMatchValidator } from 'app/utils/validators';
-import { finalize, map } from 'rxjs/operators';
+import { BaseErrorStateMatcher, passwordsMatchValidator } from 'app/utils/validators';
+import { finalize } from 'rxjs/operators';
 
 const log = new Logger("SignupComponent");
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{6,50}$/;
@@ -27,7 +27,6 @@ export class SignupComponent implements OnInit {
         Validators.required,
         Validators.pattern(mobileNumberRegex),
       ]),
-      email: new FormControl("", [Validators.required, Validators.email]),
       password: new FormControl("", [
         Validators.required,
         Validators.pattern(passwordRegex),

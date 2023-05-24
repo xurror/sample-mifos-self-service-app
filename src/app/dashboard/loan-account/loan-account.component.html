@@ -1,0 +1,118 @@
+<div class="container-fluid">
+    <div class="card" *ngIf="loanAccount">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">
+                Loan Details
+                <a (click)="clearSelection()"><i class="material-icons pull-right">close</i></a>
+            </h4>
+            <!-- <p class="card-category">Created using Roboto Font Family</p> -->
+        </div>
+        <div class="card-body">
+            <div id="typography" class="mt-2">
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Account Number: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.accountNo }}
+                    </div>
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Original Amount: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.summary.principalDisbursed | money }}
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Loan Balance: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.summary.totalOutstanding | money }}
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Amount Paid: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.summary.totalRepayment | money}}
+                    </div>
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Repayment Strategy: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.transactionProcessingStrategyName }}
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Repayments: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <span fxFlex="50%">{{loanAccount.numberOfRepayments}} every {{loanAccount.repaymentEvery}}&nbsp;{{loanAccount.repaymentFrequencyType.value}}
+                            <span *ngIf="loanAccount.repaymentFrequencyType?.id == 2 && loanAccount.repaymentFrequencyNthDayType?.id != 0 && loanAccount.repaymentFrequencyDayOfWeekType?.id != 0">
+                                &nbsp;on&nbsp;{{loanAccount.repaymentFrequencyNthDayType?.value}}&nbsp;{{loanAccount.repaymentFrequencyDayOfWeekType?.value}}
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Interest: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{loanAccount.annualInterestRate}} per annum ({{loanAccount.interestRatePerPeriod}}%&nbsp; {{loanAccount.interestRateFrequencyType.value}}) - {{loanAccount.interestType.value}}
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Interest Calculation Period: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{loanAccount.interestCalculationPeriodType.value}}
+                    </div>
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Submitted on: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.timeline.submittedOnDate  | date:dateFormat }}
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Approved on: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.timeline.approvedOnDate  | date:dateFormat }}
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Disbursed on: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.timeline.actualDisbursementDate  | date:dateFormat }}
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <strong> Matures on: </strong>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        {{ loanAccount.timeline.expectedMaturityDate  | date:dateFormat }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

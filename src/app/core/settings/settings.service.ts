@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { AlertService } from 'app/core/alert/alert.service';
 // import { Dates } from 'app/pipes/date-pipe';
 import { environment } from 'environments/environment';
 
@@ -18,9 +17,7 @@ export class SettingsService {
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
 
-  constructor(
-    private alertService: AlertService // private dateUtils: Dates
-  ) {}
+  constructor() {}
 
   /**
    * Sets date format setting throughout the app.
@@ -157,7 +154,12 @@ export class SettingsService {
    * Returns server url with api path and version
    */
   get apiUrl() {
-    return this.server + environment.apiProvider + environment.apiVersion + environment.contextPath;
+    return (
+      this.server +
+      environment.apiProvider +
+      environment.apiVersion +
+      environment.contextPath
+    );
   }
 
   /**
