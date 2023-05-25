@@ -10,29 +10,29 @@
                       </a>
                   </div>
                   <div class="card-body px-5">
-                      <form>
+                      <form [formGroup]="profileForm">
                           <div class="row">
                               <div class="col-md-5">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="External ID" disabled>
+                                <mat-form-field>
+                                    <input matInput formControlName="externalId" placeholder="External ID" disabled readonly>
                                   </mat-form-field>
                               </div>
                           </div>
                           
                           <div class="row">
                             <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Fist Name" type="text" disabled>
+                              <mat-form-field>
+                                <input matInput formControlName="firstName" placeholder="Fist Name" type="text" disabled readonly>
                               </mat-form-field>
                             </div>
                             <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Middle Name" type="text" disabled>
+                              <mat-form-field>
+                                <input matInput formControlName="middleName" placeholder="Middle Name" type="text" disabled readonly>
                               </mat-form-field>
                             </div>
                             <div class="col-md-4">
-                              <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Last Name" type="text" disabled>
+                              <mat-form-field>
+                                <input matInput formControlName="lastName" placeholder="Last Name" type="text" disabled readonly>
                               </mat-form-field>
                             </div>
                           </div>
@@ -41,33 +41,33 @@
                             <div class="col-md-6">
                               <mat-form-field>
                                 <mat-label>Date of birth</mat-label>
-                                <input matInput [matDatepicker]="picker" disabled>
+                                <input matInput formControlName="dateOfBirth" [matDatepicker]="picker" disabled readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                               </mat-form-field>
                             </div>
                             <div class="col-md-6">
-                              <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Gender" type="text" disabled>
+                              <mat-form-field>
+                                <input matInput formControlName="gender" placeholder="Gender" type="text" disabled readonly>
                               </mat-form-field>
                             </div>
                           </div>
 
                           <div class="row">
                             <div class="col-md-6">
-                              <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Mobile No" type="text">
+                              <mat-form-field>
+                                <input matInput formControlName="mobileNo" placeholder="Mobile No" type="text" disabled readonly>
                               </mat-form-field>
                             </div>
                             <div class="col-md-6">
-                              <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Email" type="email">
+                              <mat-form-field>
+                                <input matInput formControlName="email" placeholder="Email" type="email" disabled readonly>
                               </mat-form-field>
                             </div>
                           </div>
 
-                          <button mat-raised-button type="submit" class="btn btn-primary pull-right">Save</button>
-                          <div class="clearfix"></div>
+                          <!-- <button mat-raised-button type="submit" class="btn btn-primary pull-right">Save</button>
+                          <div class="clearfix"></div> -->
                       </form>
                   </div>
               </div>
